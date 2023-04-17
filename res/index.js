@@ -34,7 +34,7 @@ const NAMES = {
     'Yunxi': '云希',
     'Yunxia': '云夏',
     'Yunyang': '云扬',
-    'Xiaobei': '晓贝',
+    'Xiaobei': '晓北',
     'HsiaoChen': '晓陈',
     'YunJhe': '云哲',
     'HsiaoYu': '晓宇',
@@ -92,18 +92,18 @@ function initVoice() {
             name = NAMES[name];
         }
         var accent = names[1].substring(names[1].indexOf('('));
-        if (accent.indexOf('Mainland') > 0 || accent.indexOf('Simplified')) {
+        if (accent.indexOf('Mainland') >= 0 || accent.indexOf('Simplified') >= 0) {
             name += ' (普通话)';
-        } else if (accent.indexOf('Hong Kong') > 0) {
+        } else if (accent.indexOf('Hong Kong') >= 0) {
             name += ' (香港)';
-        } else if (accent.indexOf('Cantonese') > 0) {
+        } else if (accent.indexOf('Cantonese') >= 0) {
             name += ' (广东)';
-        } else if (accent.indexOf('Northeastern') > 0) {
+        } else if (accent.indexOf('Northeastern') >= 0) {
             name += ' (东北)';
-        } else if (accent.indexOf('Taiwan') > 0) {
+        } else if (accent.indexOf('Taiwan') >= 0) {
             name += ' (台湾)';
-        } else if (accent.indexOf('Shaanxi') > 0) {
-            name += ' (山西)';
+        } else if (accent.indexOf('Shaanxi') >= 0) {
+            name += ' (陕西)';
         } else {
             name += ' ' + accent;
         }
