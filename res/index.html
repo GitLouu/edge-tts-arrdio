@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Edge语音合成</title>
+    <script src="/aardio.js"></script>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        button {
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 4px 2px;
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+            background-color: #4CAF50;
+            color: white;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: white;
+            color: black;
+        }
+
+        button:disabled {
+            border: 2px solid #424242;
+            background: #424242;
+            color: white;
+        }
+
+        .title {
+            font-size: .5em;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: .5em;
+        }
+
+        select {
+            display: inline-block;
+            width: 100px;
+            position: relative;
+            vertical-align: middle;
+            padding: 0;
+            overflow: hidden;
+            background-color: #fff;
+            color: #555;
+            border: 1px solid #aaa;
+            text-shadow: none;
+            border-radius: 4px;
+            transition: box-shadow 0.25s ease;
+            z-index: 2;
+        }
+
+        select:hover {
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        select:before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-top-color: #ccc;
+            top: 14px;
+            right: 10px;
+            cursor: pointer;
+            z-index: -2;
+        }
+
+        select:focus {
+            outline: none;
+        }
+
+        input[type=range] {
+            width: 100px;
+            height: 8px;
+            line-height: 6px;
+        }
+    </style>
+</head>
+
+<body style="margin:0;line-height:180%;height:100%">
+    <form
+        style="height:100%;display:flex;flex-direction:column;justify-content:flex-start;align-content:stretch;padding:15px;box-sizing:border-box">
+        <div style="flex:0 1 auto; font-size: .8em;">
+            <div><label>选择语音: </lable><select id="service">
+                        <option value="Offline">离线语音</option>
+                        <option value="Online" selected>在线语音</option>
+                    </select>
+                    <select id="language"></select>
+                    <select id="voice"></select>
+            </div>
+            <label for="volume">音量:</label><input type="range" min="0" max="1" value="1" step="0.1" id="volume"><span
+                class="volume-value">1</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="rate">速度:</label><input type="range" min="0.5" max="2" value="1" step="0.1" id="rate"><span
+                class="rate-value">1</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="pitch">音调:</label><input type="range" min="0" max="2" value="1" step="0.1" id="pitch"> <span
+                class="pitch-value">1</span>
+        </div>
+
+        <div class="controls" style="flex:0 1 auto;">
+            <button id="play" type="button" class="btn" style="margin-top:5px">朗读</button>
+            <button id="record" type="button" style="margin-top:5px">朗读并录音</button>
+            <button type="button" onclick="location.reload()" title="刷新页面并停止朗读和录音">刷新</button>
+            <button id="select-path" type="button" title="选择录音文件的保存目录">选择目录</button>
+            <label class="title">录音保存至: </label><a href="javascript:void(0)" onclick="aardio.openPath(this.innerText)"
+                id="save-path" title="打开文件夹"></a>
+        </div>
+
+        <textarea rows="20" cols="100" id="txt" name="txt" autofocus placeholder="请输入要朗读的文本..."
+            style="margin-top:10px;width:100%;flex:1 1 auto;"></textarea>
+
+    </form>
+
+    <script src="index.js"></script>
+</body>
+
+</html>

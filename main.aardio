@@ -1,0 +1,63 @@
+import chrome.edge;
+var app = chrome.edge.app();
+
+import dotNet.waveIn;
+var wave = dotNet.waveIn;
+
+import fsys.dlg.dir;
+import fsys.config;
+var path;
+var recordName = "";
+var tempRecordName;
+
+var appName = "EdgeSpeechSynthesis";
+
+app.external = {
+    startRecording = function(name){
+        recordName = name;
+        if (recordName == "") return;
+        tempRecordName = "/temp_" + string.random(10) + ".wav";
+    	wave.startLoopback(path + tempRecordName);
+    } 
+    stopRecording = function(){
+        if (recordName == "") return false;
+        
+        recordName = recordName + "_" + string.random(5);
+    	wave.stop();
+    	wave.convertToMp3(path + tempRecordName, path + "/" + recordName + ".mp3");
+    	io.remove(path + tempRecordName);
+    	return true;
+    }
+    getPath = function(){
+		var dir = io.appData(appName);
+		var cfg = fsys.config(dir);
+		path = cfg.setting.savePath;
+		if (!path){
+		    path = io.curDir();
+		}
+		return path;
+    }
+    openPath = function(dir){
+        var existFile = io.exist(dir + "/" + recordName + ".mp3");
+        if (existFile)
+            process.exploreSelect(existFile);
+        else 
+            process.explore(dir);
+    }
+    
+    selectPath = function(){
+		var aPath = fsys.dlg.dir(,winform,"请选择目录");
+		if (!aPath) return path;
+		if (path == aPath) return path;
+		path = aPath;
+		var dir = io.appData(appName);
+		var cfg = fsys.config(dir);
+		cfg.setting.savePath = path;
+		cfg.saveAll();
+		return path;
+    }
+}
+
+app.start("/res/index.html");
+
+win.loopMessage();
